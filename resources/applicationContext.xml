@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+
+	<!-- 어노테이션 사용 가능해짐 -->
+	<context:component-scan base-package="com.ham.app" />
+
+	<!-- aop어노테이션 초기설정 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+	<!-- DataSource 설정 -->
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"><!-- destroy-method로 
+			연결해제 메서드 추가 -->
+		<property name="driverClassName"
+			value="com.mysql.cj.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/hamdb" />
+		<property name="username" value="root" />
+		<property name="password" value="12341234" />
+	</bean>
+
+	<!-- JDBCTemplate생성 -->
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- 트랜잭션 관리자 클래스 등록 -->
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- 동작 시점과 동작할 공통로직을 설정 -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+		<!-- <tx:method name="get*" read-only="true" /> 트랜잭션 처리(commit, rollback)가 들어가지는 않도록 참조만 해둠 --> 
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut
+			expression="execution(* com.ham.app..*(..))" id="txPointcut" />
+		<aop:advisor advice-ref="txAdvice"
+			pointcut-ref="txPointcut" /><!-- aspect대신 사용!스프링 프레임워크가 지원하는 클래스에 대한 것은 
+			이 설정으로 등록! -->
+	</aop:config>
+
+</beans>
