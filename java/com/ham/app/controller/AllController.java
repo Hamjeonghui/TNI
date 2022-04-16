@@ -177,6 +177,7 @@ public String update_users (UsersVO vo, HttpSession session, Model model) {
 		model.addAttribute("msg", "회원정보가 수정되었습니다. 다시 로그인해주세요.");
 		model.addAttribute("url", "/logout.do");
 	}else { //실패
+		model.addAttribute("msg", "수정에 실패하였습니다. 관리자에게 문의 바랍니다.");
 		model.addAttribute("url", "/error.jsp");
 	}
 	model.addAttribute("udata", vo);
@@ -192,7 +193,7 @@ public String delete_users(UsersVO vo, HttpSession session, Model model) {
 		model.addAttribute("msg", "정상적으로 삭제처리 되었습니다.");
 		model.addAttribute("url", "/main.do");
 	}else { //실패
-		model.addAttribute("msg", "삭제에 실패하였습니다. 관리자에게 문의 바랍니.");
+		model.addAttribute("msg", "삭제에 실패하였습니다. 관리자에게 문의 바랍니다.");
 		model.addAttribute("url", "/error.jsp");
 	}
 	return "redirect.jsp";
