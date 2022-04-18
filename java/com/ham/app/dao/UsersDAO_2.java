@@ -24,7 +24,7 @@ public class UsersDAO_2 {
 	private final String USERS_DELETE="delete from users where uid=?"; //유저 삭제
 	private final String USERS_UPDATE="update users set pw=?, uname=? where uid=?"; //유저정보수정
 	private final String USERS_LOGIN="select * from users where uid=? and pw=?"; //로그인
-	private final String ARTICLE_UPDATE="update article set uname=? where uid=?;"; //게시글 테이블의 작성자 이름도 수정
+	private final String ARTICLE_UPDATE="update article set uname=? where uid=?"; //게시글 테이블의 작성자 이름도 수정
 
 	// 회원가입
 	public int insert_users(UsersVO vo) {
