@@ -334,7 +334,7 @@ public class AllController {
 			model.addAttribute("url", "/error.jsp");
 		}else { //성공
 			//수정 완료된 게시글 상세 페이지로 이동
-			model.addAttribute("url", "/detail.do?uid="+vo.getUid()+"&aid="+vo.getAid());
+			model.addAttribute("url", "/detail.do?uid="+vo.getUid()+"&aid="+vo.getAid()+"&cnt=2");
 		}
 
 		return "redirect.jsp";
