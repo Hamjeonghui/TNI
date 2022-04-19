@@ -34,15 +34,20 @@
 	</bean>
 
 	<!-- 트랜잭션 관리자 클래스 등록 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+  		<constructor-arg ref="dataSource" />
+	</bean>
+	<!-- JdbcTemplate트랜잭션 매니저
 	<bean id="txManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
-
+	 -->
+	 
 	<!-- 동작 시점과 동작할 공통로직을 설정 -->
+	<!-- 
 	<tx:advice id="txAdvice" transaction-manager="txManager">
 		<tx:attributes>
-		<!-- <tx:method name="get*" read-only="true" /> 트랜잭션 처리(commit, rollback)가 들어가지는 않도록 참조만 해둠 --> 
 			<tx:method name="*" />
 		</tx:attributes>
 	</tx:advice>
@@ -50,8 +55,16 @@
 		<aop:pointcut
 			expression="execution(* com.ham.app..*(..))" id="txPointcut" />
 		<aop:advisor advice-ref="txAdvice"
-			pointcut-ref="txPointcut" /><!-- aspect대신 사용!스프링 프레임워크가 지원하는 클래스에 대한 것은 
-			이 설정으로 등록! -->
+			pointcut-ref="txPointcut" />
 	</aop:config>
-
+	 -->
+	 
+	<!-- Mybatis 설정 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean"><!-- 우리가 아까 작성해서 쓴 친구를 이제는 제공받아서 써보자! -->
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:sql-map-config.xml" />
+	</bean>
+	<bean class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSession"></constructor-arg>
+	</bean>
 </beans>
