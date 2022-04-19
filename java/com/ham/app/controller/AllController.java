@@ -6,13 +6,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,7 +23,6 @@ import com.ham.app.vo.ArticleSet;
 import com.ham.app.vo.ArticleVO;
 import com.ham.app.vo.CommentVO;
 import com.ham.app.vo.FavVO;
-import com.ham.app.vo.TestVO;
 import com.ham.app.vo.UsersVO;
 
 @Controller
@@ -171,8 +168,11 @@ public class AllController {
 	}
 
 	@RequestMapping(value = "/updateUsers.do")
-	public String update_users (UsersVO vo, HttpSession session, Model model) {
-
+	public String update_users (UsersVO vo, Model model, HttpSession session) {	
+		
+		int uauth= (Integer)session.getAttribute("uauth");
+		vo.setUauth(uauth);
+		
 		if(usersService.update_users(vo)) { //성공
 			model.addAttribute("msg", "회원정보가 수정되었습니다. 다시 로그인해주세요.");
 			model.addAttribute("url", "/logout.do");
