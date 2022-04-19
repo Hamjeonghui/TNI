@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ham.app.dao.FavDAO_2;
+import com.ham.app.dao.FavDAO_3;
 import com.ham.app.service.FavService;
 import com.ham.app.vo.FavVO;
 
@@ -14,7 +14,7 @@ public class FavServiceImpl implements FavService{
 
 	@Autowired
 	// 실질적으로 메서드를 수행할 dao객체
-	private FavDAO_2 favDAO;
+	private FavDAO_3 favDAO;
 	
 	@Override
 	public boolean insert_fav(FavVO vo) {
