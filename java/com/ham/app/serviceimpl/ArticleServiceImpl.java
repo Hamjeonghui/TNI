@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ham.app.dao.ArticleDAO_2;
+import com.ham.app.dao.ArticleDAO_3;
 import com.ham.app.service.ArticleService;
 import com.ham.app.vo.ArticleSet;
 import com.ham.app.vo.ArticleVO;
@@ -17,7 +17,7 @@ public class ArticleServiceImpl implements ArticleService{
 
 	@Autowired
 	// 실질적으로 메서드를 수행할 dao객체
-	private ArticleDAO_2 articleDAO;
+	private ArticleDAO_3 articleDAO;
 	
 	@Override
 	public boolean insert_article(ArticleVO vo) {
