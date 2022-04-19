@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ham.app.dao.UsersDAO_2;
+import com.ham.app.dao.UsersDAO_3;
 import com.ham.app.service.UsersService;
 import com.ham.app.vo.UsersVO;
 
@@ -14,7 +14,7 @@ public class UsersServiceImpl implements UsersService {
 
 	@Autowired
 	// 실질적으로 메서드를 수행할 dao객체
-	private UsersDAO_2 usersDAO;
+	private UsersDAO_3 usersDAO;
 	
 	@Override
 	public int insert_users(UsersVO vo) {
