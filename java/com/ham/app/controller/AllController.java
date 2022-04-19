@@ -57,8 +57,8 @@ public class AllController {
 
 	@RequestMapping(value = "/main.do")
 	public String main(ArticleVO vo , Model model, FavVO fvo, HttpSession session) {
-
-		List<ArticleVO> datas=articleService.getList_article(vo); // if 요청하는 정렬 방식이 있다면 값을 1로 전달
+		
+		List<ArticleVO> datas=articleService.getList_article(vo); 
 
 		String uid=(String) session.getAttribute("uid");
 
@@ -231,14 +231,11 @@ public class AllController {
 	@RequestMapping(value = "/fav2.do")
 	public String insert_fav_test (FavVO fvo, ArticleVO avo) throws SQLException {
 
-		System.out.println(fvo);
-		System.out.println(avo);
-
 		int result=0;
 
 		// 일단 insert를 실행하고,
 		boolean flag=favService.insert_fav(fvo);
-
+		
 		if(flag==false) { //실패시, pk중복으로 간주
 			System.out.println("c:좋아요 실패");
 			// delete 실행
@@ -396,7 +393,7 @@ public class AllController {
 		boolean flag=articleService.insert_comment(vo);
 
 		if(flag==true) { // 등록성공
-			model.addAttribute("url", "/detail.do?uid="+vo.getUid()+"&aid="+vo.getAid());
+			model.addAttribute("url", "/detail.do?uid="+vo.getUid()+"&aid="+vo.getAid()+"&cnt=2");
 		}else {
 			model.addAttribute("msg", "댓글 작성이 정상적으로 이루어지지 않았습니다. 관리자에게 문의 바랍니다.");
 			model.addAttribute("url", "/error.jsp");
@@ -413,7 +410,7 @@ public class AllController {
 		boolean flag=articleService.insert_comment_2(vo);
 
 		if(flag==true) { // 등록성공
-			model.addAttribute("url", "/detail.do?uid="+vo.getUid()+"&aid="+vo.getAid());
+			model.addAttribute("url", "/detail.do?uid="+vo.getUid()+"&aid="+vo.getAid()+"&cnt=2");
 		}else {
 			model.addAttribute("msg", "댓글 작성이 정상적으로 이루어지지 않았습니다. 관리자에게 문의 바랍니다.");
 			model.addAttribute("url", "/error.jsp");
@@ -425,8 +422,8 @@ public class AllController {
 	public String delete_comment(CommentVO vo, Model model) {
 
 		// 부모댓글이 삭제되었다면, 해당 댓글의 대댓글 삭제하기
-		if(vo.getCgroup() != 0) {
-			List<CommentVO> datas = articleService.getList_comment(vo); // 삭제된 댓글의 대댓글 가져오기
+		if(vo.getCcheck() == 0) {
+			List<CommentVO> datas = articleService.getList_comment(vo); // 삭제할 댓글의 대댓글 가져오기
 			for(int i=0; i<datas.size(); i++) {
 				articleService.delete_comment(datas.get(i));
 			}
@@ -436,7 +433,7 @@ public class AllController {
 		boolean flag=articleService.delete_comment(vo);
 
 		if(flag==true) { // 등록성공
-			model.addAttribute("url", "/detail.do?uid="+vo.getUid()+"&aid="+vo.getAid());
+			model.addAttribute("url", "/detail.do?uid="+vo.getUid()+"&aid="+vo.getAid()+"&cnt=2");
 		}else {
 			model.addAttribute("msg", "댓글 삭제가 정상적으로 이루어지지 않았습니다. 관리자에게 문의 바랍니다.");
 			model.addAttribute("url", "/error.jsp");
