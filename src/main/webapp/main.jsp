@@ -205,7 +205,7 @@
 							<div class="btnBox"
 								style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
 								<button class="filter btn btn-primary"
-									onclick="location.href ='main.do'" style="margin-right: 5px;">
+									onclick="location.href ='main.do?aid=1'" style="margin-right: 5px;">
 									<spring:message code="message.main.filterDate" />
 								</button>
 								<button class="filter btn btn-primary"
