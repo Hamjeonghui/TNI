@@ -140,7 +140,7 @@ public class ArticleDAO_2 {
 		}else if(vo.getRcnt()!=0) {
 			System.out.println("댓글수 기준 정렬");
 			datas=jdbcTemplate.query(ARTICLE_FILTER_RCNT, new ArticleRowMapper());
-		}else if(vo.getAid() != 0){ // 기본 정렬 조건일때,
+		}else { // 기본 정렬 조건일때,
 			System.out.println("최신순 정렬");
 			datas=jdbcTemplate.query(ARTICLE_SELECTALL, new ArticleRowMapper());
 		}
