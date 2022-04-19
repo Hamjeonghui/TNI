@@ -69,15 +69,20 @@ public class UsersDAO_2 {
 	//회원정보변경 + 트랜잭션 처리
 	public boolean update_users(UsersVO vo) {
 		boolean flag = false;
+
 		Object[] args= {vo.getPw(), vo.getUname(), vo.getUid()};
-		if(jdbcTemplate.update(USERS_UPDATE, args)>0) {
+		if(jdbcTemplate.update(USERS_UPDATE, args)>0) { //타투이스트가 아니라면, 회원정보만 변경
 			System.out.println("dao2: 회원정보변경 성공");
+			flag=true;
+		}
+		if(vo.getUauth()==1) { // 타투이스트라면 게시글 작성자명도 변경
 			Object[] args2= {vo.getUname(), vo.getUid()};
 			if(jdbcTemplate.update(ARTICLE_UPDATE, args2)>0) {//유저정보+게시글의 작성자명 수정 성공하면,
 				System.out.println("dao2: 게시글 작성자명 변경 성공");
 				flag=true;// flag=true
 			}
 		}
+
 		return flag;
 	}
 
@@ -106,14 +111,14 @@ class UsersRowMapper implements RowMapper<UsersVO>{
 	@Override
 	public UsersVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 		UsersVO data = new UsersVO();
-		
+
 		data.setUid(rs.getString("uid"));
 		data.setPw(rs.getString("pw"));
 		data.setUname(rs.getString("uname"));
 		data.setUbirth(rs.getString("ubirth"));
 		data.setUauth(rs.getInt("uauth"));
-		
+
 		return data;
 	}
-	
+
 }
