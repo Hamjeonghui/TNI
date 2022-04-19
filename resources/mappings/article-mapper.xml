@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ArticleDAO"> <!-- DAO에서 사용할 SQL을 담은 파일 -->
+
+	<select id="getListComment" resultType="comment">
+		SELECT * FROM COMMENT WHERE AID=#{aid} AND CCHECK=0 ORDER BY CID DESC 
+	</select>
+	<select id="getListComment2" resultType="comment">
+		SELECT * FROM COMMENT WHERE AID=#{aid} AND CGROUP=#{cgroup}
+	</select>		
+	<select id="getArticle" resultType="article"><!-- ArticleDAO.getArticle이라는 명령어를 통해 앞으로 불러낼 수 있을 것이다. -->
+		SELECT * FROM ARTICLE WHERE AID=#{aid} 
+	</select>
+	<select id="getArticleList_search" resultType="article">
+		SELECT * FROM ARTICLE WHERE 1=1
+		<if test="title != null">
+			AND TITLE LIKE '%' #{title} '%'
+		</if>
+		<if test="uname != null">
+			AND UNAME LIKE '%' #{uname} '%'
+		</if>
+		<if test="acontent != null">
+			AND ACONTENT LIKE '%' #{acontent} '%'
+		</if>
+		<if test="part != null">
+			AND PART LIKE '%' #{part} '%'
+		</if>
+		<if test="addr != null">
+			AND ADDR LIKE '%' #{addr} '%'
+		</if>								
+		ORDER BY AID DESC 
+	</select>
+	<select id="getArticleList" resultType="article">
+		SELECT * FROM ARTICLE 
+		<choose>
+			<when test="cnt > 0">
+				ORDER BY CNT
+			</when>
+			<when test="fav > 0">
+				ORDER BY FAV
+			</when>
+			<when test="rcnt > 0">
+				ORDER BY RCNT
+			</when>	
+			<otherwise>
+				ORDER BY AID
+			</otherwise>					
+		</choose>
+		DESC 
+	</select>	
+	<insert id="insertArticle">
+		INSERT INTO ARTICLE (UID, UNAME, TITLE, ACONTENT, PART, LEADTIME, ADDR, FILENAME) VALUES (#{uid}, #{uname}, #{title}, #{acontent}, #{part}, #{leadTime}, #{addr}, #{filename}) 
+	</insert>
+	<insert id="insertComment">
+		INSERT INTO COMMENT (UID, AID, CCONTENT) VALUES (#{uid}, #{aid}, #{ccontent})
+	</insert>	
+	<insert id="insertComment2">
+		INSERT INTO COMMENT (UID, AID, CCONTENT, CCHECK, CGROUP) VALUES (#{uid}, #{aid}, #{ccontent}, #{ccheck}, #{cgroup}) 
+	</insert>	
+	<update id="updateArticle">
+		UPDATE ARTICLE SET TITLE=#{title}, ACONTENT=#{acontent}, PART=#{part}, LEADTIME=#{leadTime}, ADDR=#{addr}, FILENAME=#{filename} WHERE AID=#{aid} 
+	</update>
+	<update id="updateArticle_cnt">
+		UPDATE ARTICLE SET CNT=CNT+1 WHERE AID=#{aid} <!-- CNT+? -->
+	</update>
+	<update id="updateArticle_rcnt_p">
+		UPDATE ARTICLE SET RCNT=RCNT+1 WHERE AID=#{aid}
+	</update>
+	<update id="updateArticle_rcnt_m">
+		UPDATE ARTICLE SET RCNT=RCNT-1 WHERE AID=#{aid}
+	</update>						
+	<delete id="deleteArticle">
+		DELETE FROM ARTICLE WHERE AID=#{aid}
+	</delete>	
+	<delete id="deleteComment">
+		DELETE FROM COMMENT WHERE CID=#{cid}
+	</delete>	
+		
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- 별칭 설정 -->
+	<typeAliases>
+		<!-- 어디 위치의 누구를 뭐라고 부를 것인지! -->
+		<typeAlias type="com.ham.app.vo.ArticleVO" alias="article"/>
+		<typeAlias type="com.ham.app.vo.ArticleSet" alias="articleSet"/>
+		<typeAlias type="com.ham.app.vo.CommentVO" alias="comment"/>
+		<typeAlias type="com.ham.app.vo.FavVO" alias="fav"/>
+		<typeAlias type="com.ham.app.vo.UsersVO" alias="users"/>
+	</typeAliases>
+
+	<!-- SQL mapper연결 -->
+	<mappers>
+		<!-- 어디 파일을 참조할 것인지 설정 -->
+		<mapper resource="mappings/article-mapper.xml"/>
+		<mapper resource="mappings/users-mapper.xml"/>
+		<mapper resource="mappings/fav-mapper.xml"/>
+	</mappers>
+
+</configuration>

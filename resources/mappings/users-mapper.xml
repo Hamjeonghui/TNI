@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UsersDAO">
+
+	<select id="loginUsers" resultType="users">
+		SELECT * FROM USERS WHERE UID=#{uid} AND PW=#{pw}
+	</select>
+	<select id="getUsers" resultType="users">
+		SELECT * FROM USERS WHERE UID=#{uid}
+	</select>
+	<insert id="insertUsers">
+		INSERT INTO USERS VALUES(#{uid}, #{pw}, #{uname}, #{ubirth}, #{uauth}) 
+	</insert>
+	<update id="updateUsers">
+		UPDATE USERS SET PW=#{pw}, UNAME=#{uname} WHERE UID=#{uid}
+	</update>
+	<update id="updateArticle_uname" parameterType="article">
+		UPDATE ARTICLE SET UNAME=#{uname} WHERE UID=#{uid}
+	</update>	
+	<delete id="deleteUsers">
+		DELETE FROM USERS WHERE UID=#{uid}
+	</delete>
+	
+</mapper>

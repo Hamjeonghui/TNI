@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FavDAO">
+
+	<select id="getFav" resultType="fav">
+		SELECT * FROM FAV WHERE UID=#{uid} AND AID=#{aid}
+	</select>
+	<select id="getListFav" resultType="fav">
+		SELECT * FROM FAV WHERE UID=#{uid}
+	</select>
+	<insert id="insertFav">
+		INSERT INTO FAV (FID, AID, UID) VALUES(#{fid}, #{aid}, #{uid}) 
+	</insert>
+	<update id="updateArticle_fav_p" parameterType="article">
+		UPDATE ARTICLE SET FAV=FAV+1 WHERE AID=#{aid}
+	</update>
+	<update id="updateArticle_fav_m" parameterType="article">
+		UPDATE ARTICLE SET FAV=FAV-1 WHERE AID=#{aid}
+	</update>
+	<delete id="deleteFav">
+		DELETE FROM FAV WHERE AID=#{aid} AND UID=#{uid}
+	</delete>	
+	
+</mapper>
